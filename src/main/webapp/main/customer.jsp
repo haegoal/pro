@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <div class="col-6">
     <form name="frm3" class="card p-3">
         <div class="row">
@@ -95,11 +96,7 @@
                 data:{cphone},
                 url:"/customer/read",
                 success:function(data){
-                    if(!data){
-                        $("#modal_customer").modal("show");
-                        $(frm5.inputPhone).val(cphone)
-                        $(frm5.cphone2).val(cphone2)
-                    }else{
+                    console.log(data)
                         $.ajax({
                             type:"get",
                             dataType:"json",
@@ -111,7 +108,10 @@
                                 $("#div_cus").html(temp(data));
                             }
                         })
-                    }
+                },error:function (){
+                    $("#modal_customer").modal("show");
+                    $(frm5.inputPhone).val(cphone)
+                    $(frm5.cphone2).val(cphone2)
                 }
             })
         }

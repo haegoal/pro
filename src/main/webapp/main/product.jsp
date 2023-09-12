@@ -29,7 +29,7 @@
       <div class="col-6 col-sm-6 col-md-6">
         <div class="input-group">
           <span class="input-group-text">상품분류</span>
-          <input class="form-control" name="pcode" maxlength='16' onkeyup="if(window.event.keyCode==13){pcodeFunc()}" oninput='isKor(this)'/>
+          <input class="form-control" name="pcode" id="pcode-enter" maxlength='16' oninput='isKor(this)'/>
         </div>
       </div>
       <div class="col-6 col-sm-6 col-md-6">
@@ -47,7 +47,7 @@
       <div class="col-6 col-sm-6 col-md-6">
         <div class="input-group">
           <span class="input-group-text">상품명</span>
-          <input class="form-control" name="pname" maxlength='16' onkeyup="if(window.event.keyCode==13){pnameFunc()}" autocomplete='off' oninput='isKor(this)'/>
+          <input class="form-control" name="pname" id="pname-enter" maxlength='16' autocomplete='off' oninput='isKor(this)'/>
         </div>
       </div>
     </div>
@@ -55,7 +55,7 @@
       <div class="col-6 col-sm-6 col-md-6">
         <div class="input-group">
           <span class="input-group-text">제조번호</span>
-          <input class="form-control" name="pnumber" maxlength='16' onkeyup="if(window.event.keyCode==13){test()}"/>
+          <input class="form-control" name="pnumber" maxlength='16' id="test-enter">
         </div>
       </div>
     </div>
@@ -63,7 +63,7 @@
       <div class="col-6 col-sm-6 col-md-6">
         <div class="input-group">
           <span class="input-group-text">모델명</span>
-          <input class="form-control" name="mname" maxlength='16' onkeyup="if(window.event.keyCode==13){mnameFunc()}"/>
+          <input class="form-control" name="mname" id="mname-enter" maxlength='16'>
         </div>
       </div>
     </div>
@@ -81,7 +81,7 @@
         url:"/product/read",
         dataType:"json",
         success:function(data){
-          console.log(data);
+          console.log(data.mcode);
           $(frm2.mcode).val(data.mcode)
           $(frm2.pname).val(data.pname)
           $(frm2.pcode).val(data.pcode)
@@ -91,23 +91,26 @@
   });
 
 
-  function pcodeFunc(){
-    const query = $(frm2.pcode).val();
-    const key ="pcode";
-    $.ajax({
-      type:"get",
-      data:{query, key},
-      url:"/product/read",
-      dataType:"json",
-      success:function(data){
-        $(frm2.mcode).val(data.mcode)
-        $(frm2.pname).val(data.pname)
-        $(frm2.pcode).val(data.pcode)
-      }
-    })
-  }
+  document.getElementById('pcode-enter').addEventListener('keyup', function (event) {
+    if (event.key === 'Enter') {
+      const query = $(frm2.pcode).val();
+      const key = "pcode";
+      $.ajax({
+        type: "get",
+        data: {query, key},
+        url: "/product/read",
+        dataType: "json",
+        success: function (data) {
+          $(frm2.mcode).val(data.mcode)
+          $(frm2.pname).val(data.pname)
+          $(frm2.pcode).val(data.pcode)
+        }
+      })
+    }
+  });
 
-  function pnameFunc(){
+  document.getElementById('pname-enter').addEventListener('keyup', function (event) {
+    if (event.key === 'Enter') {
     const query = $(frm2.pname).val();
     const key ="pname";
     $.ajax({
@@ -121,24 +124,27 @@
         $(frm2.pname).val(data.pname)
       }
     })
-  }
+    }
+  });
 
-  function mnameFunc(){
-    const query = $(frm2.mname).val();
-    const key ="mname";
-    $.ajax({
-      type:"get",
-      data:{query, key},
-      url:"/product/read",
-      dataType:"json",
-      success:function(data){
-        $(frm2.mcode).val(data.mcode)
-        $(frm2.pcode).val(data.pcode)
-        $(frm2.pname).val(data.pname)
-        $(frm2.mname).val(data.mname)
-      }
-    })
-  }
+  document.getElementById('mname-enter').addEventListener('keyup', function (event) {
+    if (event.key === 'Enter') {
+      const query = $(frm2.mname).val();
+      const key = "mname";
+      $.ajax({
+        type: "get",
+        data: {query, key},
+        url: "/product/read",
+        dataType: "json",
+        success: function (data) {
+          $(frm2.mcode).val(data.mcode)
+          $(frm2.pcode).val(data.pcode)
+          $(frm2.pname).val(data.pname)
+          $(frm2.mname).val(data.mname)
+        }
+      })
+    }
+  })
 
   function isEng(item)  {
     item.value = item.value.replace(/[^A-Za-z]/ig, '')
@@ -148,13 +154,14 @@
     item.value = item.value.replace(/[^ㄱ-ㅎ|가-힣]/g, '')
   }
 
-  function test() {
-    let pnumber=$(frm2.pnumber).val();
-
-
-    if(pnumber.length==11){
-      let fpnumber = pnumber.slice(0,5) + '-' + pnumber.slice(5, 7) + '-' + pnumber.slice(7,11);
-      $(frm2.pdate).val(fpnumber.substring(1,11))
+  // ex) A20231011BE
+  document.getElementById('test-enter').addEventListener('keyup', function (event) {
+    if (event.key === 'Enter') {
+      let pnumber = $(frm2.pnumber).val();
+      if (pnumber.length == 11) {
+        let fpnumber = pnumber.slice(0, 5) + '-' + pnumber.slice(5, 7) + '-' + pnumber.slice(7, 11);
+        $(frm2.pdate).val(fpnumber.substring(1, 11))
+      }
     }
-  }
+  });
 </script>

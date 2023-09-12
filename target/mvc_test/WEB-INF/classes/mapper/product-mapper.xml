@@ -3,9 +3,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- namespace 반드시 작성! -->
-<mapper namespace="Prodto">
-    <select id="read" parameterType="object" resultType="prodto">
-        select * from product where #{key} like #{query}
+<mapper namespace="Product">
+    <select id="read" resultType="product" parameterType="java.util.HashMap">
+        SELECT * FROM product WHERE ${key} LIKE CONCAT('%', #{query}, '%')
     </select>
 </mapper>
 

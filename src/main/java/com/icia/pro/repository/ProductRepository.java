@@ -13,10 +13,8 @@ public class ProductRepository {
     @Autowired
     private SqlSessionTemplate sql;
 
-    public ProductDTO read(String key, String query) {
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("key", key);
-        parameters.put("query", query);
-        return sql.selectOne("Prodto.read", parameters);
+
+    public ProductDTO read(Map<String, String> map) {
+        return sql.selectOne("Product.read", map);
     }
 }

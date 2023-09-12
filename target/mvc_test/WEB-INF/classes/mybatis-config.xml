@@ -4,8 +4,7 @@
 <configuration>
     <typeAliases>
         <typeAlias type="com.icia.pro.dto.UsersDTO" alias="users"></typeAlias>
-    </typeAliases>
-    <typeAliases>
-        <typeAlias type="com.icia.pro.dto.ProductDTO" alias="prodto"></typeAlias>
+        <typeAlias type="com.icia.pro.dto.ProductDTO" alias="product"></typeAlias>
+        <typeAlias type="com.icia.pro.dto.CustomerDTO" alias="customer"></typeAlias>
     </typeAliases>
 </configuration>
